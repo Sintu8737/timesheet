@@ -167,10 +167,56 @@ While not implemented in this version, the application is structured to support:
 
 ### Vercel (Recommended)
 
-1. Push code to GitHub repository
-2. Connect repository to Vercel
-3. Set environment variables in Vercel dashboard
-4. Deploy automatically
+1. **Push code to GitHub repository**
+2. **Connect repository to Vercel**
+3. **Set environment variables in Vercel dashboard**:
+   ```
+   NEXTAUTH_URL=https://your-app-name.vercel.app
+   NEXTAUTH_SECRET=your-secure-secret-here
+   ```
+4. **Deploy automatically**
+
+### 🔧 Vercel Deployment Troubleshooting
+
+If login functionality fails on Vercel, check these common issues:
+
+#### 1. Environment Variables
+Ensure these are set in Vercel dashboard:
+- `NEXTAUTH_URL` must be your full Vercel URL (e.g., `https://your-app.vercel.app`)
+- `NEXTAUTH_SECRET` must be a secure random string
+
+Generate a secure secret:
+```bash
+openssl rand -base64 32
+```
+
+#### 2. Build Issues
+- Ensure all dependencies are in `package.json`
+- Check Vercel build logs for errors
+- Verify API routes are properly exported
+
+#### 3. Common Solutions
+```bash
+# Clear local build cache
+rm -rf .next
+
+# Rebuild locally to test
+npm run build
+npm start
+```
+
+#### 4. Debugging Steps
+1. Visit `https://your-app.vercel.app/api/health` to verify API is working
+2. Check browser console for JavaScript errors
+3. Review Vercel function logs for API errors
+4. Ensure NextAuth routes are accessible at `/api/auth/[...nextauth]`
+
+#### 5. Production Configuration
+The app now includes:
+- Proper `NEXTAUTH_SECRET` handling
+- User ID conversion to string (JWT requirement)
+- Production-ready error handling
+- Health check endpoint at `/api/health`
 
 ### Other Platforms
 

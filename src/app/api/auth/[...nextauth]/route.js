@@ -17,7 +17,7 @@ export const authOptions = {
 
         if (user) {
           return {
-            id: user.id,
+            id: user.id.toString(),
             email: user.email,
             name: user.name,
           };
@@ -32,6 +32,7 @@ export const authOptions = {
   session: {
     strategy: 'jwt',
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
