@@ -1,36 +1,205 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ticktock - Timesheet Management Application
 
-## Getting Started
+A modern, responsive timesheet management application built with Next.js and TailwindCSS. This application allows users to track their work hours, manage projects, and maintain comprehensive timesheet records.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Authentication**: Secure login system with NextAuth.js
+- **Dashboard**: Clean, intuitive dashboard for managing timesheets
+- **Timesheet Management**: Add, edit, and view timesheet entries
+- **Responsive Design**: Mobile-friendly interface that works on all devices
+- **Form Validation**: Client-side validation with error handling
+- **Mock API**: Internal API routes with realistic mock data
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: TailwindCSS
+- **Authentication**: NextAuth.js
+- **Language**: JavaScript (ES6+)
+- **Font**: Inter (Google Fonts)
+
+## Project Structure
+
+```
+timesheet-app/
+├── src/
+│   ├── app/
+│   │   ├── api/                 # API routes
+│   │   │   ├── auth/           # NextAuth configuration
+│   │   │   └── timesheets/     # Timesheet API endpoints
+│   │   ├── dashboard/          # Dashboard page
+│   │   ├── login/              # Login page
+│   │   ├── layout.js           # Root layout
+│   │   ├── page.js             # Home page (redirect)
+│   │   └── globals.css         # Global styles
+│   ├── components/
+│   │   ├── Providers.js        # Session provider
+│   │   ├── TimesheetTable.js   # Timesheet table component
+│   │   └── AddEntryModal.js    # Add/Edit modal
+│   └── data/
+│       └── mockData.js         # Mock data for users and timesheets
+├── .env.local                  # Environment variables
+├── package.json
+├── README.md
+└── tailwind.config.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Instructions
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+ installed
+- npm or yarn package manager
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Set up environment variables**
+   - Create a `.env.local` file in the root directory
+   - Add the following environment variables:
+   ```
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your-secret-key-here
+   ```
+   - For production, generate a secure secret for `NEXTAUTH_SECRET`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. **Open the application**
+   - Navigate to [http://localhost:3000](http://localhost:3000)
+   - The app will redirect to login if not authenticated
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Login
+
+- **Default Credentials**:
+  - Email: `john.doe@example.com`
+  - Password: `password123`
+  
+- **Alternative User**:
+  - Email: `jane.smith@example.com`
+  - Password: `password123`
+
+### Dashboard Features
+
+1. **View Timesheets**: Browse all weekly timesheet entries
+2. **Filter Options**: Filter by date range and status
+3. **Add Entries**: Click "Add New Entry" to create new timesheet entries
+4. **Edit Entries**: Click "Update" on any timesheet to edit
+5. **Status Tracking**: Visual indicators for COMPLETED, INCOMPLETE, and MISSING entries
+
+### Timesheet Statuses
+
+- **COMPLETED**: All required hours (40) logged for the week
+- **INCOMPLETE**: Some hours logged but not the full requirement
+- **MISSING**: No hours logged for the week
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/signin` - User login
+- `POST /api/auth/signout` - User logout
+
+### Timesheets
+- `GET /api/timesheets` - Get all timesheets
+- `POST /api/timesheets` - Create new timesheet entry
+- `GET /api/timesheets/[id]` - Get specific timesheet
+- `PUT /api/timesheets/[id]` - Update timesheet
+- `DELETE /api/timesheets/[id]` - Delete timesheet
+
+## Development Notes
+
+### Code Quality
+
+- **Component Structure**: Modular, reusable components with clear separation of concerns
+- **Naming Conventions**: Descriptive variable and function names following JavaScript conventions
+- **Error Handling**: Comprehensive error handling with user-friendly messages
+- **State Management**: Efficient state management using React hooks
+
+### Assumptions
+
+1. **Authentication**: Uses credential-based authentication with mock user data
+2. **Data Persistence**: Currently uses in-memory mock data (no database)
+3. **Time Tracking**: Weekly timesheets with 40-hour requirement
+4. **User Roles**: Single user role (no admin/user distinction)
+
+### Future Enhancements
+
+- Database integration (PostgreSQL/MongoDB)
+- Real-time collaboration features
+- Advanced reporting and analytics
+- Email notifications
+- Multi-language support
+- Mobile app development
+
+## Testing
+
+While not implemented in this version, the application is structured to support:
+
+- **Unit Tests**: Using Jest and React Testing Library
+- **Integration Tests**: API endpoint testing
+- **E2E Tests**: Using Cypress or Playwright
+
+## Performance Considerations
+
+- **Code Splitting**: Automatic code splitting with Next.js
+- **Image Optimization**: Next.js Image component for optimized images
+- **Caching**: API response caching for improved performance
+- **Bundle Size**: Optimized bundle with tree shaking
+
+## Security
+
+- **Session Management**: Secure session handling with NextAuth.js
+- **Input Validation**: Client-side and server-side validation
+- **XSS Protection**: Built-in XSS protection with Next.js
+- **CSRF Protection**: CSRF tokens for form submissions
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push code to GitHub repository
+2. Connect repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically
+
+### Other Platforms
+
+The application can be deployed to any platform supporting Node.js:
+
+- AWS (Amplify, EC2)
+- Google Cloud Platform
+- DigitalOcean
+- Heroku
+
+## Support
+
+For issues or questions:
+
+1. Check the console for error messages
+2. Verify environment variables are set correctly
+3. Ensure all dependencies are installed
+4. Review the API endpoints for proper data structure
+
+## Time Spent
+
+Approximately 4-5 hours for complete implementation including:
+- Project setup and configuration
+- Authentication implementation
+- Dashboard and UI components
+- API routes and mock data
+- Styling and responsive design
+- Documentation
+
+---
+
+**Built with ❤️ using Next.js and TailwindCSS**
